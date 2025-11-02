@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AresLitho"
         xmlns:vm="clr-namespace:AresLitho.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="AresLitho" Height="450" Width="800">
     <Window.DataContext>
@@ -23,7 +24,13 @@
             </MenuItem>
         </Menu>
 
-        <Grid>
+        <Grid Name="DropArea"
+            Background="Transparent"
+              xmlns:drBehavior="clr-namespace:AresLitho.Behaviors">
+            <i:Interaction.Behaviors>
+                <drBehavior:BackgroundDropCommandBehavior Command="{Binding DropCommand}"/>
+            </i:Interaction.Behaviors>
+
             <DockPanel>
                 <Grid DockPanel.Dock="Right" Width="200">
                     <Grid.RowDefinitions>
@@ -33,7 +40,13 @@
 
                     <StackPanel Grid.Row="0">
                         <TextBlock Text="オブジェクト"/>
-                        <ListBox>
+                        <ListBox
+                            ItemsSource="{Binding ImportedFiles}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FileName}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                             <ListBox.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="削除"/>
