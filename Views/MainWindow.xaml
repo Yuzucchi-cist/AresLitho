@@ -10,7 +10,45 @@
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
-    <Grid>
 
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="ファイル">
+                <MenuItem Header="開く"/>
+                <Separator/>
+                <MenuItem Header="書き出し"/>
+            </MenuItem>
+            <MenuItem Header="設定">
+
+            </MenuItem>
+        </Menu>
+
+        <Grid>
+            <DockPanel>
+                <Grid DockPanel.Dock="Right" Width="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="オブジェクト"/>
+                        <ListBox>
+                            <ListBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="削除"/>
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
+                        </ListBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Text="プロパティ"/>
+                        <ListBox/>
+                    </StackPanel>
+                </Grid>
+                <Grid/>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
 </Window>
