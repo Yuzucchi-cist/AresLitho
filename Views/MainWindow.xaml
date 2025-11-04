@@ -60,7 +60,9 @@
                         <ListBox/>
                     </StackPanel>
                 </Grid>
-                <Grid/>
+                <Grid>
+                    <Image Source="{Binding Bitmap}"/>
+                </Grid>
             </DockPanel>
         </Grid>
     </DockPanel>

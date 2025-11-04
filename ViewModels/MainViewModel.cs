@@ -17,6 +17,15 @@ namespace AresLitho.ViewModels
 
         public ObservableCollection<ImportedFile> ImportedFiles { get; } = new();
 
+        private BitmapSource? _Bitmap;
+        public  BitmapSource? Bitmap { get { return _Bitmap; }
+            private set
+            {
+                _Bitmap = value;
+                OnPropertyChanged(nameof(Bitmap));
+            }
+        }
+
         public MainViewModel()
         {
             DragOverCommand = new RelayCommand<DragEventArgs>(DropArea_DragOver);
@@ -69,6 +78,10 @@ namespace AresLitho.ViewModels
                     MessageBoxImage.Error
                 );
             }
+
+            byte[] importedImg = ImportedFiles[0].GetImageBytes!;
+            int width = ImportedFiles[0].BinImage!.GetLength(1), height = ImportedFiles[0].BinImage!.GetLength(0);
+            Bitmap = BitmapSource.Create(width, height, 200, 200, PixelFormats.Bgr32, null, importedImg, width * 4);
 
             // Drop event handling has done on DropArea
             e.Handled = true;
