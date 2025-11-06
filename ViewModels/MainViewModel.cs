@@ -79,8 +79,8 @@ namespace AresLitho.ViewModels
                 );
             }
 
-            byte[] importedImg = ImportedFiles[0].GetImageBytes!;
-            int width = ImportedFiles[0].BinImage!.GetLength(1), height = ImportedFiles[0].BinImage!.GetLength(0);
+            byte[] importedImg = ImportedFiles[0].Bgr32Image!;
+            int width = ImportedFiles[0].BinImage!.Width, height = ImportedFiles[0].BinImage!.Height;
             Bitmap = BitmapSource.Create(width, height, 200, 200, PixelFormats.Bgr32, null, importedImg, width * 4);
 
             // Drop event handling has done on DropArea
