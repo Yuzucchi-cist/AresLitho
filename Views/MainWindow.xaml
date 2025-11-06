@@ -41,7 +41,8 @@
                     <StackPanel Grid.Row="0">
                         <TextBlock Text="オブジェクト"/>
                         <ListBox
-                            ItemsSource="{Binding ImportedFiles}">
+                            ItemsSource="{Binding ImportedFiles}"
+                            SelectedItem="{Binding SelectedImportedFile}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding FileName}"/>
@@ -57,7 +58,17 @@
 
                     <StackPanel Grid.Row="1">
                         <TextBlock Text="プロパティ"/>
-                        <ListBox/>
+                        <ListBox ItemsSource="{Binding SelectedProperties}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" Width="75"/>
+                                        <Separator/>
+                                        <TextBox Text="{Binding Value}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </Grid>
                 <Grid>

@@ -17,6 +17,30 @@ namespace AresLitho.ViewModels
 
         public ObservableCollection<ImportedFile> ImportedFiles { get; } = new();
 
+        private ImportedFile? _SelectedImportedFIle;
+        public ImportedFile? SelectedImportedFile
+        {
+            get { return _SelectedImportedFIle; }
+            set
+            {
+                if(_SelectedImportedFIle == value) return;
+                if (value == null)
+                {
+                    SelectedProperties = [];
+                    return;
+                }
+
+                _SelectedImportedFIle = value;
+
+                SelectedProperties = [.. _SelectedImportedFIle.Property.ToPropertyDictArray()];
+
+                OnPropertyChanged(nameof(SelectedImportedFile));
+                OnPropertyChanged(nameof(SelectedProperties));
+            }
+        }
+
+        public ObservableCollection<PropertyDict> SelectedProperties { get; set; } = [];
+
         private BitmapSource? _Bitmap;
         public  BitmapSource? Bitmap { get { return _Bitmap; }
             private set
