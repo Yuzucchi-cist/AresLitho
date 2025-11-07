@@ -18,7 +18,7 @@ namespace AresLitho.Models
         }
         public BinImage(int width, int height)
         {
-            _binImage = new bool[width, height];
+            _binImage = new bool[height, width];
         }
         public BinImage(bool[,] binImage)
         {
@@ -87,7 +87,7 @@ namespace AresLitho.Models
             {
                 for (int y = 0; y < source.Height; y++)
                 {
-                    _binImage[y1 + y, x1 + x] = source._binImage[x, y];
+                    _binImage[y1 + y, x1 + x] = source._binImage[y, x];
                 }
             }
             return new BinImage(_binImage);
