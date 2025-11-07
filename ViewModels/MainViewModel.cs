@@ -134,7 +134,7 @@ namespace AresLitho.ViewModels
 
                 GooFile goo = GooFile.CreateFromBinImage2cmToCenter(binImage);
                 goo.WriteToFile(filename);
-                MessageBox.Show($"{filename}は書き込まれました。");
+                MessageBox.Show($"{filename}は正常に書き込まれました。");
             }
             catch (Exception ex)
             {
