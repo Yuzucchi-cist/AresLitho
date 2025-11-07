@@ -15,6 +15,8 @@ namespace AresLitho.ViewModels
         public ICommand DragOverCommand { get; private set; }
         public ICommand DropCommand { get; private set; }
 
+        public ICommand WriteGoo { get; private set; }
+
         public ObservableCollection<ImportedFile> ImportedFiles { get; } = new();
 
         private ImportedFile? _SelectedImportedFIle;
@@ -54,6 +56,7 @@ namespace AresLitho.ViewModels
         {
             DragOverCommand = new RelayCommand<DragEventArgs>(DropArea_DragOver);
             DropCommand = new RelayCommand<DragEventArgs>(DropArea_DragDrop);
+            WriteGoo = new RelayCommand<object>(WriteGoo_Execute);
             PropertyChanged = delegate { }; // Initialize the event to avoid null issues
         }
 
@@ -109,6 +112,34 @@ namespace AresLitho.ViewModels
 
             // Drop event handling has done on DropArea
             e.Handled = true;
+        }
+
+        private void WriteGoo_Execute(object? parameter)
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog
+            {
+                FileName = "GooFile",
+                DefaultExt = ".goo",
+                Filter = "Goo files (.goo)|*.goo"
+            };
+
+            bool? result = dialog.ShowDialog();
+            if (result == false) return;
+
+            try
+            {
+                string filename = dialog.FileName;
+
+                BinImage binImage = ImportedFiles[0].BinImage!;
+
+                GooFile goo = GooFile.CreateFromBinImage2cmToCenter(binImage);
+                goo.WriteToFile(filename);
+                MessageBox.Show($"{filename}は書き込まれました。");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Gooファイルの書き込み中にエラーが発生しました: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

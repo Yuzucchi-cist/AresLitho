@@ -11,13 +11,12 @@
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
-
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="ファイル">
                 <MenuItem Header="開く"/>
                 <Separator/>
-                <MenuItem Header="書き出し"/>
+                <MenuItem Header="書き出し" Command="{ Binding WriteGoo }"/>
             </MenuItem>
             <MenuItem Header="設定">
 
