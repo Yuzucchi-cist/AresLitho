@@ -36,8 +36,8 @@ namespace AresLitho.Models
             goo.Header.BigPreviewImage = layerImage.Resize(GooHeaderInfo.BigPreviewImageWidth, GooHeaderInfo.BigPreviewImageHeight).EncodeToBinary();
             goo.Header.TotalLayers = 1;
 
-            int xSize2cm = (int)(2 * goo.Header.XResolution / goo.Header.XSize);
-            int ySize2cm = (int)(2 * goo.Header.YResolution / goo.Header.YSize);
+            int xSize2cm = (int)(20 * goo.Header.XResolution / goo.Header.XSize);
+            int ySize2cm = (int)(20 * goo.Header.YResolution / goo.Header.YSize);
 
             layerImage = new BinImage(goo.Header.XResolution, goo.Header.YResolution).SetToCenter(layerImage.Resize(xSize2cm, ySize2cm));
 
