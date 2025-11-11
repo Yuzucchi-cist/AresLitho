@@ -35,6 +35,9 @@ namespace AresLitho.Models
             _binImage = Dxf2Bitmap(dxf, width, height);
         }
 
+        public void SetPixel(int x, int y, bool value) =>
+            _binImage[y, x] = value;
+
         public BinImage Resize(int newWidth, int newHeight)
         {
             bool[,] newImage = new bool[newHeight, newWidth];

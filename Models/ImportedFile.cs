@@ -1,3 +1,4 @@
+using AresLitho.Services;
 using netDxf;
 using System.IO;
 
@@ -32,7 +33,7 @@ namespace AresLitho.Models
             if (System.IO.Path.GetExtension(path).Equals(".dxf", StringComparison.CurrentCultureIgnoreCase))
             {
                 DxfDocument dxf = DxfDocument.Load(path);
-                BinImage = new BinImage(dxf);
+                BinImage = DxfRasterizer.LoadAndRasterize(dxf);
             }
             else if (System.IO.Path.GetExtension(path).Equals(".stl", StringComparison.CurrentCultureIgnoreCase))
             {
