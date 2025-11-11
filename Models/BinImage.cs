@@ -86,10 +86,10 @@ namespace AresLitho.Models
             return new BinImage(_binImage);
         }
 
-        private static bool[,] FillClosedAreas(bool[,] img)
+        public BinImage FillClosedAreas()
         {
-            int height = img.GetLength(0);
-            int width = img.GetLength(1);
+            int height = _binImage.GetLength(0);
+            int width = _binImage.GetLength(1);
 
             bool[,] visited = new bool[height, width];
 
@@ -109,7 +109,7 @@ namespace AresLitho.Models
                         int nx = cx + dx[dir];
                         int ny = cy + dy[dir];
                         if (nx >= 0 && nx < width && ny >= 0 && ny < height &&
-                            !img[ny, nx] && !visited[ny, nx])
+                            !_binImage[ny, nx] && !visited[ny, nx])
                         {
                             visited[ny, nx] = true;
                             queue.Enqueue((nx, ny));
@@ -120,22 +120,22 @@ namespace AresLitho.Models
 
             for (int x = 0; x < width; x++)
             {
-                if (!img[0, x] && !visited[0, x])
+                if (!_binImage[0, x] && !visited[0, x])
                 {
                     FloodFill(x, 0);
                 }
-                if (!img[height - 1, x] && !visited[height - 1, x])
+                if (!_binImage[height - 1, x] && !visited[height - 1, x])
                 {
                     FloodFill(x, height - 1);
                 }
             }
             for (int y = 0; y < height; y++)
             {
-                if (!img[y, 0] && !visited[y, 0])
+                if (!_binImage[y, 0] && !visited[y, 0])
                 {
                     FloodFill(0, y);
                 }
-                if (!img[y, width - 1] && !visited[y, width - 1])
+                if (!_binImage[y, width - 1] && !visited[y, width - 1])
                 {
                     FloodFill(width - 1, y);
                 }
@@ -145,13 +145,13 @@ namespace AresLitho.Models
             {
                 for (int x = 0; x < width; x++)
                 {
-                    if (!img[y, x] && !visited[y, x])
+                    if (!_binImage[y, x] && !visited[y, x])
                     {
-                        img[y, x] = true;
+                        _binImage[y, x] = true;
                     }
                 }
             }
-            return img;
+            return new BinImage(_binImage);
         }
 
     }
