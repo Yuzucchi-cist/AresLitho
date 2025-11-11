@@ -25,16 +25,6 @@ namespace AresLitho.Models
             _binImage = binImage;
         }
 
-        public BinImage(DxfDocument dxf)
-        {
-            _binImage = Dxf2Bitmap(dxf, null, null);
-        }
-
-        public BinImage(DxfDocument dxf, int?width, int? height)
-        {
-            _binImage = Dxf2Bitmap(dxf, width, height);
-        }
-
         public void SetPixel(int x, int y, bool value) =>
             _binImage[y, x] = value;
 
@@ -94,70 +84,6 @@ namespace AresLitho.Models
                 }
             }
             return new BinImage(_binImage);
-        }
-
-        private static bool[,] Dxf2Bitmap(DxfDocument dxf, int? w, int? h)
-        {
-            int width = (w != null) ? w.Value : 555;
-            int height =(h != null) ? h.Value :  555;
-            bool[,] image = new bool [width, height];
-
-            var polylines = dxf.Entities.Polylines2D;
-
-            double minX = polylines.Min(line => (line.Vertexes.Min(vertex => vertex.Position.X)));
-            double maxX = polylines.Max(line => (line.Vertexes.Max(vertex => vertex.Position.X)));
-            double minY = polylines.Min(line => (line.Vertexes.Min(vertex => vertex.Position.Y)));
-            double maxY = polylines.Max(line => (line.Vertexes.Max(vertex => vertex.Position.Y)));
-
-            double scaleX = (width - 1) / (maxX - minX);
-            double scaleY = (height - 1) / (maxY - minY);
-            double scale = Math.Min(scaleX, scaleY);
-
-            foreach (var polyline in polylines)
-            {
-                for (int i = 0; i < polyline.Vertexes.Count - 1; i++)
-                {
-                    int x1 = (int)((polyline.Vertexes[i].Position.X - minX) * scale);
-                    int y1 = (int)((polyline.Vertexes[i].Position.Y - minY) * scale);
-                    int x2 = (int)((polyline.Vertexes[i + 1].Position.X - minX) * scale);
-                    int y2 = (int)((polyline.Vertexes[i + 1].Position.Y - minY) * scale);
-                    DrawLine(image, x1, y1, x2, y2);
-                }
-            }
-
-            image = FillClosedAreas(image);
-
-            return image;
-        }
-
-        private static void DrawLine(bool[,] img, int x1, int y1, int x2, int y2)
-        {
-            int w = img.GetLength(1);
-            int h = img.GetLength(0);
-
-            int dx = Math.Abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
-            int dy = -Math.Abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
-            int err = dx + dy;
-
-            while (true)
-            {
-                if (x1 >= 0 && x1 < w && y1 >= 0 && y1 < h)
-                {
-                    img[h - 1 - y1, x1] = true;
-                }
-                if (x1 == x2 && y1 == y2) break;
-                int e2 = 2 * err;
-                if (e2 >= dy)
-                {
-                    err += dy;
-                    x1 += sx;
-                }
-                if (e2 <= dx)
-                {
-                    err += dx;
-                    y1 += sy;
-                }
-            }
         }
 
         private static bool[,] FillClosedAreas(bool[,] img)
