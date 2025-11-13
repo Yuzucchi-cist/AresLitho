@@ -74,8 +74,8 @@ namespace AresLitho.Models
 
         public BinImage SetToCenter(BinImage source)
         {
-            int x1 = (Width + source.Width) / 2;
-            int y1 = (Height + source.Height) / 2;
+            int x1 = (Width - source.Width) / 2;
+            int y1 = (Height - source.Height) / 2;
             for (int x = 0; x < source.Width; x++)
             {
                 for (int y = 0; y < source.Height; y++)
