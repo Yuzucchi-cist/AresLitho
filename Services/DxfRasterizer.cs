@@ -6,7 +6,7 @@ namespace AresLitho.Services
 {
     public static class DxfRasterizer
     {
-        private const double pixelSizeMm = 0.018;   // 18 microns per pixel
+        public const double pixelSizeMm = 0.018;   // 18 microns per pixel
 
         public static BinImage LoadAndRasterize(DxfDocument dxf)
         {
