@@ -116,30 +116,8 @@ namespace AresLitho.Services
             int centerX = (int)(circle.Center.X / pixelSizeMm);
             int centerY = (int)(circle.Center.Y / pixelSizeMm);
             int radius = (int)(circle.Radius / pixelSizeMm);
-            int x = radius;
-            int y = 0;
-            int err = 0;
-            while (x >= y)
-            {
-                image.SetPixel(centerX + x, image.Height - 1 - centerY + y, true);
-                image.SetPixel(centerX + y, image.Height - 1 - centerY + x, true);
-                image.SetPixel(centerX - y, image.Height - 1 - centerY + x, true);
-                image.SetPixel(centerX - x, image.Height - 1 - centerY + y, true);
-                image.SetPixel(centerX - x, image.Height - 1 - centerY - y, true);
-                image.SetPixel(centerX - y, image.Height - 1 - centerY - x, true);
-                image.SetPixel(centerX + y, image.Height - 1 - centerY - x, true);
-                image.SetPixel(centerX + x, image.Height - 1 - centerY - y, true);
-                y += 1;
-                if (err <= 0)
-                {
-                    err += 2 * y + 1;
-                }
-                if (err > 0)
-                {
-                    x -= 1;
-                    err -= 2 * x + 1;
-                }
-            }
+
+            image.DrawCircle(centerX, image.Height - 1 - centerY, radius);
         }
 
         private static void DrawArc(BinImage image, Arc arc)

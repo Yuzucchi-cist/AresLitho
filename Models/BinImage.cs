@@ -72,6 +72,20 @@ namespace AresLitho.Models
             return imageData;
         }
 
+        public BinImage DrawCircle(int centerX, int centerY, int radius)
+        {
+            for (double angle = 0; angle < 2 * Math.PI; angle += 0.01)
+            {
+                int x = (int)(centerX + radius * Math.Cos(angle));
+                int y = (int)(centerY + radius * Math.Sin(angle));
+                if (x >= 0 && x < Width && y >= 0 && y < Height)
+                {
+                    _binImage[y, x] = true;
+                }
+            }
+            return new BinImage(_binImage);
+        }
+
         public BinImage SetToCenter(BinImage source)
         {
             int x1 = (Width - source.Width) / 2;
