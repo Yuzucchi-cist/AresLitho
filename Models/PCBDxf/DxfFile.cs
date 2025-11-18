@@ -2,14 +2,15 @@ using AresLitho.Services;
 using netDxf;
 using System.IO;
 
-namespace AresLitho.Models
+namespace AresLitho.Models.PCBDxf
 {
-    class ImportedFile
+    abstract partial class DxfFile
     {
         private readonly string _path;
         public string FileName { get { return System.IO.Path.GetFileName(_path); } }
         public string Path { get { return _path; } }
-        public BinImage? BinImage { get; private set; }
+        public DxfDocument DxfDocument { get; }
+        public BinImage BinImage { get; private set; }
         public byte[]? Bgr32Image
         {
             get => BinImage?.EncodeToBgr32();
@@ -25,20 +26,13 @@ namespace AresLitho.Models
             }
         }
 
-        public ImportedFile(string path)
+        public DxfFile(string path)
         {
             // File format validation
             ValidateFileFormat(path);
 
-            if (System.IO.Path.GetExtension(path).Equals(".dxf", StringComparison.CurrentCultureIgnoreCase))
-            {
-                DxfDocument dxf = DxfService.Load(path);
-                BinImage = DxfRasterizer.LoadAndRasterize(dxf).FillClosedAreas();
-            }
-            else if (System.IO.Path.GetExtension(path).Equals(".stl", StringComparison.CurrentCultureIgnoreCase))
-            {
-                // STL file reading logic to be implemented
-            }
+            DxfDocument = DxfService.Load(path);
+            BinImage = DxfRasterizer.LoadAndRasterize(DxfDocument).FillClosedAreas();
 
             _path = path;
         }
@@ -62,7 +56,6 @@ namespace AresLitho.Models
             switch (path)
             {
                 case "dxf":
-                case "stl":
                     return true;
                 default:
                     return false;
