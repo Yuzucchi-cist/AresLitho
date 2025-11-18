@@ -28,6 +28,15 @@ namespace AresLitho.Models
         public void SetPixel(int x, int y, bool value) =>
             _binImage[y, x] = value;
 
+        public BinImage Invert(bool x, bool y)
+        {
+            bool[,] newImage = new bool[Height, Width];
+            for (int iy = 0; iy < Height; iy++)
+                for (int ix = 0; ix < Width; ix++)
+                    newImage[iy, ix] = _binImage[y ? Height - iy - 1 : iy, x ? Width - ix - 1 : ix];
+            return new BinImage(newImage);
+        }
+
         public BinImage Resize(int newWidth, int newHeight)
         {
             bool[,] newImage = new bool[newHeight, newWidth];

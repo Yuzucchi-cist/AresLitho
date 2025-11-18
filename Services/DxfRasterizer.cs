@@ -79,7 +79,7 @@ namespace AresLitho.Services
             int err = dx - dy;
             while (true)
             {
-                image.SetPixel(ix0, image.Height - 1 - iy0, true);
+                image.SetPixel(ix0, iy0, true);
                 if (ix0 == ix1 && iy0 == iy1) break;
                 int err2 = 2 * err;
                 if (err2 > -dy)
@@ -117,7 +117,7 @@ namespace AresLitho.Services
             int centerY = (int)(circle.Center.Y / pixelSizeMm);
             int radius = (int)(circle.Radius / pixelSizeMm);
 
-            image.DrawCircle(centerX, image.Height - 1 - centerY, radius);
+            image.DrawCircle(centerX, centerY, radius);
         }
 
         private static void DrawArc(BinImage image, Arc arc)
@@ -131,7 +131,7 @@ namespace AresLitho.Services
             {
                 int x = centerX + (int)(radius * Math.Cos(angle));
                 int y = centerY + (int)(radius * Math.Sin(angle));
-                image.SetPixel(x, image.Height - 1 - y, true);
+                image.SetPixel(x, y, true);
             }
         }
     }

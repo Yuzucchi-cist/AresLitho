@@ -106,7 +106,7 @@ namespace AresLitho.ViewModels
                 );
             }
 
-            byte[] importedImg = ImportedFiles[0].Bgr32Image!;
+            byte[] importedImg = ImportedFiles[0].Invert(false, true).Bgr32Image!;
             int width = ImportedFiles[0].BinImage!.Width, height = ImportedFiles[0].BinImage!.Height;
             Bitmap = BitmapSource.Create(width, height, 200, 200, PixelFormats.Bgr32, null, importedImg, width * 4);
 
