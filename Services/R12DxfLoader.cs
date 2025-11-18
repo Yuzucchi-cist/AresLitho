@@ -33,6 +33,15 @@ namespace AresLitho.Services
                     }
                     else if (value == "ENDSEC")
                     {
+                        // Add the last entity if exists
+                        if (inEntitiesSection && entityData.Count > 0 && !string.IsNullOrEmpty(currentEntityType))
+                        {
+                            var entity = ParseEntity(currentEntityType, entityData);
+                            if (entity != null)
+                            {
+                                dxf.Entities.Add(entity);
+                            }
+                        }
                         inEntitiesSection = false;
                         continue;
                     }
@@ -58,16 +67,6 @@ namespace AresLitho.Services
                 else if (inEntitiesSection)
                 {
                     entityData[code] = value;
-                }
-            }
-
-            // Add the last entity if exists
-            if (inEntitiesSection && entityData.Count > 0 && !string.IsNullOrEmpty(currentEntityType))
-            {
-                var entity = ParseEntity(currentEntityType, entityData);
-                if (entity != null)
-                {
-                    dxf.Entities.Add(entity);
                 }
             }
 
