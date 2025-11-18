@@ -95,6 +95,63 @@ namespace AresLitho.Models
             return new BinImage(_binImage);
         }
 
+        public BinImage DrawFilledCircle(int centerX, int centerY, int radius, bool fillValue)
+        {
+            int r2 = radius * radius;
+
+            int yStart = Math.Max(0, centerY - radius);
+            int yEnd   = Math.Min(Height - 1, centerY + radius);
+            int xStart = Math.Max(0, centerX - radius);
+            int xEnd   = Math.Min(Width - 1, centerX + radius);
+
+            for (int y = yStart; y <= yEnd; y++)
+            {
+                int dy = y - centerY;
+                int dy2 = dy * dy;
+
+                for (int x = xStart; x <= xEnd; x++)
+                {
+                    int dx = x - centerX;
+                    if (dx * dx + dy2 <= r2)
+                    {
+                        _binImage[y, x] = fillValue;
+                    }
+                }
+            }
+
+            return new BinImage(_binImage);
+        }
+
+        public BinImage InvertColor()
+        {
+            bool[,] newBinImage = new bool[Height, Width];
+            for (int y = 0; y < Height; y++)
+                for (int x = 0; x < Width; x++)
+                    newBinImage[y, x] = !_binImage[y, x];
+            return new BinImage(newBinImage);
+        }
+
+        public BinImage Composite(BinImage source) => Composite(source, 0, 0);
+
+        public BinImage Composite(BinImage source, int offsetX, int offsetY)
+        {
+            bool[,] newBinImage = new bool[Height, Width];
+            Array.Copy(_binImage, newBinImage, _binImage.Length);
+            for (int x = 0; x < source.Width; x++)
+            {
+                for (int y = 0; y < source.Height; y++)
+                {
+                    int targetX = offsetX + x;
+                    int targetY = offsetY + y;
+                    if (targetX >= 0 && targetX < Width && targetY >= 0 && targetY < Height)
+                    {
+                        newBinImage[targetY, targetX] = source._binImage[y, x];
+                    }
+                }
+            }
+            return new BinImage(newBinImage);
+        }
+
         public BinImage SetToCenter(BinImage source)
         {
             int x1 = (Width - source.Width) / 2;
