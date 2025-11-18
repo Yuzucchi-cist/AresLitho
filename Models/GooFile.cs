@@ -32,8 +32,8 @@ namespace AresLitho.Models
                 Header = GooHeaderInfo.CreateDefaultGooHeaderInfo()
             };
 
-            goo.Header.SmallPreviewImage = layerImage.Resize(GooHeaderInfo.SmallPreviewImageWidth, GooHeaderInfo.SmallPreviewImageHeight).EncodeToBinary();
-            goo.Header.BigPreviewImage = layerImage.Resize(GooHeaderInfo.BigPreviewImageWidth, GooHeaderInfo.BigPreviewImageHeight).EncodeToBinary();
+            goo.Header.SmallPreviewImage = layerImage.Scale(GooHeaderInfo.SmallPreviewImageWidth, GooHeaderInfo.SmallPreviewImageHeight).EncodeToBinary();
+            goo.Header.BigPreviewImage = layerImage.Scale(GooHeaderInfo.BigPreviewImageWidth, GooHeaderInfo.BigPreviewImageHeight).EncodeToBinary();
             goo.Header.TotalLayers = 1;
 
             layerImage = new BinImage(goo.Header.XResolution, goo.Header.YResolution).SetToCenter(layerImage);
@@ -51,11 +51,11 @@ namespace AresLitho.Models
                 Header = GooHeaderInfo.CreateDefaultGooHeaderInfo()
             };
 
-            goo.Header.SmallPreviewImage = layerImage.Resize(GooHeaderInfo.SmallPreviewImageWidth, GooHeaderInfo.SmallPreviewImageHeight).EncodeToBinary();
-            goo.Header.BigPreviewImage = layerImage.Resize(GooHeaderInfo.BigPreviewImageWidth, GooHeaderInfo.BigPreviewImageHeight).EncodeToBinary();
+            goo.Header.SmallPreviewImage = layerImage.Scale(GooHeaderInfo.SmallPreviewImageWidth, GooHeaderInfo.SmallPreviewImageHeight).EncodeToBinary();
+            goo.Header.BigPreviewImage = layerImage.Scale(GooHeaderInfo.BigPreviewImageWidth, GooHeaderInfo.BigPreviewImageHeight).EncodeToBinary();
             goo.Header.TotalLayers = 1;
 
-            goo.Layers.Add(new GooLayerContent(layerImage.Resize(goo.Header.XResolution, goo.Header.YResolution)));
+            goo.Layers.Add(new GooLayerContent(layerImage.Scale(goo.Header.XResolution, goo.Header.YResolution)));
 
             return goo;
         }

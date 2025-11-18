@@ -41,11 +41,11 @@
                     <StackPanel Grid.Row="0">
                         <TextBlock Text="レイヤー"/>
                         <ListBox
-                            ItemsSource="{Binding ImportedFiles}"
-                            SelectedItem="{Binding SelectedImportedFile}">
+                            ItemsSource="{Binding Layers}"
+                            SelectedItem="{Binding SelectedLayer}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding FileName}"/>
+                                    <TextBlock Text="{Binding Name}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                             <ListBox.ContextMenu>

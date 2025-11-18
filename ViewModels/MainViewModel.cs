@@ -7,6 +7,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using AresLitho.Models.Layer;
+using AresLitho.Models.PCBDxf;
+using AresLitho.Commons.ExtendObservableCollection;
+using AresLitho.Services;
 
 namespace AresLitho.ViewModels
 {
@@ -17,31 +21,25 @@ namespace AresLitho.ViewModels
 
         public ICommand WriteGoo { get; private set; }
 
-        public ObservableCollection<ImportedFile> ImportedFiles { get; } = new();
+        public ExtendObservableCollection<Layer> Layers { get; } = [];
 
-        private ImportedFile? _SelectedImportedFIle;
-        public ImportedFile? SelectedImportedFile
+        private Layer? _SelectedLayer;
+        public Layer? SelectedLayer
         {
-            get { return _SelectedImportedFIle; }
+            get { return _SelectedLayer; }
             set
             {
-                if(_SelectedImportedFIle == value) return;
-                if (value == null)
-                {
-                    SelectedProperties = [];
-                    return;
-                }
+                if(_SelectedLayer == value) return;
+                _SelectedLayer = value;
+                if(value != null)
+                    Bitmap = EncodeToBitmap(value.BinImage);
+                else
+                    Bitmap = null;
 
-                _SelectedImportedFIle = value;
-
-                SelectedProperties = [.. _SelectedImportedFIle.Property.ToPropertyDictArray()];
-
-                OnPropertyChanged(nameof(SelectedImportedFile));
-                OnPropertyChanged(nameof(SelectedProperties));
+                OnPropertyChanged(nameof(SelectedLayer));
+                OnPropertyChanged(nameof(Bitmap));
             }
         }
-
-        public ObservableCollection<PropertyDict> SelectedProperties { get; set; } = [];
 
         private BitmapSource? _Bitmap;
         public  BitmapSource? Bitmap { get { return _Bitmap; }
@@ -82,11 +80,13 @@ namespace AresLitho.ViewModels
             if (e?.Data.GetData(DataFormats.FileDrop) is not string[] droppedFiles) return;
 
             Exception[] unimportedFileExceptions = [];
+            List<DxfFile> dxfFiles = [];
+
             foreach (var droppedFile in droppedFiles)
             {
                 try
                 {
-                    ImportedFiles.Add(new ImportedFile(droppedFile));
+                    dxfFiles.Add(DxfFile.Load(droppedFile));
                 }
                 catch (ArgumentException exception)
                 {
@@ -105,10 +105,10 @@ namespace AresLitho.ViewModels
                     MessageBoxImage.Error
                 );
             }
+            if (dxfFiles.Count == 0) return;
+            Layers.AddRange(Layer.Load(dxfFiles));
 
-            byte[] importedImg = ImportedFiles[0].Invert(false, true).Bgr32Image!;
-            int width = ImportedFiles[0].BinImage!.Width, height = ImportedFiles[0].BinImage!.Height;
-            Bitmap = BitmapSource.Create(width, height, 200, 200, PixelFormats.Bgr32, null, importedImg, width * 4);
+            Bitmap = EncodeToBitmap(Layers[0].BinImage);
 
             // Drop event handling has done on DropArea
             e.Handled = true;
@@ -116,6 +116,8 @@ namespace AresLitho.ViewModels
 
         private void WriteGoo_Execute(object? parameter)
         {
+            if (SelectedLayer is null) return;
+
             var dialog = new Microsoft.Win32.SaveFileDialog
             {
                 FileName = "GooFile",
@@ -130,7 +132,7 @@ namespace AresLitho.ViewModels
             {
                 string filename = dialog.FileName;
 
-                BinImage binImage = ImportedFiles[0].BinImage!;
+                BinImage binImage = SelectedLayer.BinImage;
 
                 GooFile goo = GooFile.CreateFromBinImageToCenter(binImage);
                 goo.WriteToFile(filename);
@@ -140,6 +142,14 @@ namespace AresLitho.ViewModels
             {
                 MessageBox.Show($"Gooファイルの書き込み中にエラーが発生しました: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private static BitmapSource EncodeToBitmap(BinImage image)
+        {
+            int width = (int)(20 / DxfRasterizer.pixelSizeMm), height = (int)(20 / DxfRasterizer.pixelSizeMm);
+            byte[] importedImg = image.Resize(width, height).Invert(false, true).EncodeToBgr32();
+            return BitmapSource.Create(width, height, 200, 200, PixelFormats.Bgr32, null, importedImg, width * 4);
+
         }
     }
 }

@@ -40,6 +40,19 @@ namespace AresLitho.Models
         public BinImage Resize(int newWidth, int newHeight)
         {
             bool[,] newImage = new bool[newHeight, newWidth];
+
+            int copyWidth = Math.Min(Width, newWidth);
+            int copyHeight = Math.Min(Height, newHeight);
+
+            for (int y = 0; y < Height; y++)
+                Array.Copy(_binImage, y * Width, newImage, y * newWidth, copyWidth);
+
+            return new BinImage(newImage);
+        }
+
+        public BinImage Scale(int newWidth, int newHeight)
+        {
+            bool[,] newImage = new bool[newHeight, newWidth];
             double scaleY = (double)newHeight / _binImage.GetLength(0);
             double scaleX = (double)newWidth / _binImage.GetLength(1);
             for (int y = 0; y < newHeight; y++)
