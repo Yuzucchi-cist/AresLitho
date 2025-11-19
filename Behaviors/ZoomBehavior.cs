@@ -52,6 +52,10 @@ namespace AresLitho.Behaviors
 
             AssociatedObject.Loaded -= OnLoad;
             AssociatedObject.PreviewMouseWheel -= OnMouseWheel;
+
+            Window window = Window.GetWindow(AssociatedObject);
+            if (window != null)
+                window.PreviewKeyDown -= OnKeyDown;
         }
 
         private void OnLoad(object sender, RoutedEventArgs e)
@@ -71,6 +75,15 @@ namespace AresLitho.Behaviors
             };
 
             Target.RenderTransform = transformGroup;
+
+            initialScale.X = scaleTransform.ScaleX;
+            initialScale.Y = scaleTransform.ScaleY;
+            initialTranslatePosition.X = translateTransform.X;
+            initialTranslatePosition.Y = translateTransform.Y;
+
+            Window window = Window.GetWindow(AssociatedObject);
+            if (window != null)
+                window.PreviewKeyDown += OnKeyDown;
         }
 
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
@@ -83,6 +96,21 @@ namespace AresLitho.Behaviors
             ChangeScale(mousePosition, zoomScale);
 
             e.Handled = true;
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (scaleTransform is null || translateTransform is null) return;
+            if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                && (e.Key == Key.D0 || e.Key == Key.NumPad0))
+            {
+                scaleTransform.ScaleX = initialScale.X;
+                scaleTransform.ScaleY = initialScale.Y;
+                translateTransform.X = initialTranslatePosition.X;
+                translateTransform.Y = initialTranslatePosition.Y;
+
+                e.Handled = true;
+            }
         }
 
         private void ChangeScale(Point mousePosition, double zoomScale)
