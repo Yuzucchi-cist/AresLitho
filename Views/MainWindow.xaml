@@ -71,8 +71,11 @@
                         </ListBox>
                     </StackPanel>
                 </Grid>
-                <Grid>
-                    <Image Source="{Binding Bitmap}"/>
+                <Grid Background="Transparent">
+                    <Image x:Name="PreviewImage" Source="{Binding Bitmap}"/>
+                    <i:Interaction.Behaviors>
+                        <drBehavior:ZoomBehavior Target="{Binding ElementName=PreviewImage}"/>
+                    </i:Interaction.Behaviors>
                 </Grid>
             </DockPanel>
         </Grid>
