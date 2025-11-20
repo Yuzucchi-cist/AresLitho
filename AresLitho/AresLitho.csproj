@@ -10,10 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="LICENSE.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="netdxf" Version="2023.11.10" />
   </ItemGroup>
@@ -23,7 +19,6 @@
     <Resource Include="favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="LICENSE.txt" />
   </ItemGroup>
 
   <ItemGroup>
