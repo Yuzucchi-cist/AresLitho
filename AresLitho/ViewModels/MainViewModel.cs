@@ -11,6 +11,7 @@ using AresLitho.Models.Layer;
 using AresLitho.Models.PCBDxf;
 using AresLitho.Commons.ExtendObservableCollection;
 using AresLitho.Services;
+using AresLitho.Models.GooFile;
 
 namespace AresLitho.ViewModels
 {
