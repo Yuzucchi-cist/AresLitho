@@ -17,16 +17,6 @@ namespace AresLitho.Models.PCBDxf
             get => BinImage?.EncodeToBgr32();
         }
 
-        public ImportedFileProperty Property
-        {
-            get
-            {
-                int width = BinImage?.Width ?? 0;
-                int height = BinImage?.Height ?? 0;
-                return new ImportedFileProperty(_path, width, height);
-            }
-        }
-
         public DxfFile(string path)
         {
             // File format validation
