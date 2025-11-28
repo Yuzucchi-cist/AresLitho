@@ -20,6 +20,23 @@ namespace AresLitho.Models.Layer
 
         public static List<Layer> Load(List<DxfFile> dxfFiles)
         {
+            ValidateFileName(dxfFiles);
+
+            if (dxfFiles.Count == 1)
+            {
+                switch (dxfFiles[0])
+                {
+                    case CuLayer cuLayer:
+                        return new List<Layer> { new SingleLayer(cuLayer) };
+                    case PasteLayer pasteLayer:
+                        return new List<Layer> { new SingleLayer(pasteLayer) };
+                    case EdgeCutLayer edgeCutLayer:
+                        return new List<Layer> { new SingleLayer(edgeCutLayer) };
+                    default:
+                        throw new Exception("Unknown layer type.");
+                }
+            }
+
             var (edgeCut, frontPaste, frontCu, innerCu, backCu, backPaste) = ParseLayers(dxfFiles);
 
             List<Layer> layers = [];
@@ -50,6 +67,35 @@ namespace AresLitho.Models.Layer
             layers.Add(backMetalLayer);
             layers.Add(backFilmLayer);
             return layers;
+        }
+
+        private static void ValidateFileName(List<DxfFile> dxfFiles)
+        {
+            if (dxfFiles.Count == 1)
+                return;
+
+            int cuCount = 0, pasteCount = 0, edgeCutCount = 0;
+            foreach (var file in dxfFiles)
+            {
+                switch (file)
+                                    {
+                    case CuLayer:
+                        cuCount++;
+                        break;
+                    case PasteLayer:
+                        pasteCount++;
+                        break;
+                    case EdgeCutLayer:
+                        edgeCutCount++;
+                        break;
+                    default:
+                        throw new Exception($"Unknown layer type in file: {file.FileName}");
+                }
+            }
+            if (cuCount != 2 && pasteCount != 2 && edgeCutCount != 1)
+            {
+                throw new Exception("Invalid number of layer files provided.");
+            }
         }
 
         private static (EdgeCutLayer edgeCut, PasteLayer f_paste, CuLayer f_cu, List<CuLayer> in_cu, CuLayer f_back, PasteLayer b_paste) ParseLayers(List<DxfFile> dxfFiles)
