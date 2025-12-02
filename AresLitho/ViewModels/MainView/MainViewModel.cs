@@ -147,6 +147,7 @@ namespace AresLitho.ViewModels.MainView
                 BinImage binImage = SelectedLayer.BinImage;
 
                 GooFile goo = GooFile.CreateFromBinImageToCenter(binImage);
+                goo = SelectedLayer.PrinterProfile.ApplyPrinterProfileToGoo(goo);
                 goo.WriteToFile(filename);
                 MessageBox.Show($"{filename}は正常に書き込まれました。");
             }

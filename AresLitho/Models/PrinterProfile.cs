@@ -32,5 +32,13 @@ namespace AresLitho.Models
             );
             return profile;
         }
+
+        public GooFile.GooFile ApplyPrinterProfileToGoo(GooFile.GooFile goo)
+        {
+            goo.Header.XSize = XSize;
+            goo.Header.YSize = YSize;
+            goo.Header.BottomExposureTime = ExposureTime;
+            return goo;
+        }
     }
 }
