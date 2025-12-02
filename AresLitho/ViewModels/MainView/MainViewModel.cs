@@ -13,7 +13,7 @@ using AresLitho.Commons.ExtendObservableCollection;
 using AresLitho.Services;
 using AresLitho.Models.GooFile;
 
-namespace AresLitho.ViewModels
+namespace AresLitho.ViewModels.MainView
 {
     class MainViewModel : ViewModelBase
     {

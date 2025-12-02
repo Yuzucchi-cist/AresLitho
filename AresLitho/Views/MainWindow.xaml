@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AresLitho"
         xmlns:properties="clr-namespace:AresLitho.Properties"
-        xmlns:vm="clr-namespace:AresLitho.ViewModels"
+        xmlns:vm="clr-namespace:AresLitho.ViewModels.MainView"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="AresLitho" Height="450" Width="800" Icon="/favicon.ico">
