@@ -1,4 +1,6 @@
 using netDxf;
+using OpenCvSharp;
+using System.Runtime.InteropServices;
 
 namespace AresLitho.Models
 {
@@ -23,6 +25,17 @@ namespace AresLitho.Models
         public BinImage(bool[,] binImage)
         {
             _binImage = binImage;
+        }
+
+        public BinImage(byte[] bytes, int width, int height)
+        {
+            _binImage = new bool[height, width];
+            for (int y = 0; y < height; y++)
+                for (int x = 0; x < width; x++)
+                {
+                    int i = y * width + x;
+                    _binImage[y, x] = bytes[i] != 0;
+                }
         }
 
         public void SetPixel(int x, int y, bool value) =>
@@ -210,71 +223,23 @@ namespace AresLitho.Models
 
         public BinImage FillClosedAreas()
         {
-            int height = _binImage.GetLength(0);
-            int width = _binImage.GetLength(1);
+            // Convert to OpenCV Mat
+            Mat mat = new(Height, Width, MatType.CV_8UC1);
+            for (int y = 0; y < Height; y++)
+                for (int x = 0; x < Width; x++)
+                    mat.Set(y, x, _binImage[y, x] ? 255 : 0);
 
-            bool[,] visited = new bool[height, width];
+            // Find contours
+            Cv2.FindContours(mat, out Point[][] contours, out HierarchyIndex[] hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
 
-            int[] dx = { 1, -1, 0, 0 };
-            int[] dy = { 0, 0, 1, -1 };
+            // Fill only the child contours (closed areas)
+            contours = contours.Where((_, i) => hierarchy[i].Parent >= 0).ToArray();
+            Cv2.FillPoly(mat, contours, Scalar.White);
 
-            void FloodFill(int x, int y)
-            {
-                Queue<(int, int)> queue = new();
-                queue.Enqueue((x, y));
-                visited[y, x] = true;
-                while (queue.Count > 0)
-                {
-                    var (cx, cy) = queue.Dequeue();
-                    for (int dir = 0; dir < 4; dir++)
-                    {
-                        int nx = cx + dx[dir];
-                        int ny = cy + dy[dir];
-                        if (nx >= 0 && nx < width && ny >= 0 && ny < height &&
-                            !_binImage[ny, nx] && !visited[ny, nx])
-                        {
-                            visited[ny, nx] = true;
-                            queue.Enqueue((nx, ny));
-                        }
-                    }
-                }
-            }
-
-            for (int x = 0; x < width; x++)
-            {
-                if (!_binImage[0, x] && !visited[0, x])
-                {
-                    FloodFill(x, 0);
-                }
-                if (!_binImage[height - 1, x] && !visited[height - 1, x])
-                {
-                    FloodFill(x, height - 1);
-                }
-            }
-            for (int y = 0; y < height; y++)
-            {
-                if (!_binImage[y, 0] && !visited[y, 0])
-                {
-                    FloodFill(0, y);
-                }
-                if (!_binImage[y, width - 1] && !visited[y, width - 1])
-                {
-                    FloodFill(width - 1, y);
-                }
-            }
-
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    if (!_binImage[y, x] && !visited[y, x])
-                    {
-                        _binImage[y, x] = true;
-                    }
-                }
-            }
-            return new BinImage(_binImage);
+            // Convert back to BinImage
+            byte[] outputBytes = new byte[mat.Height * mat.Width * mat.ElemSize()];
+            Marshal.Copy(mat.Data, outputBytes, 0, outputBytes.Length);
+            return new BinImage(outputBytes, Width, Height);
         }
-
     }
 }
