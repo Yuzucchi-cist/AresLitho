@@ -8,9 +8,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using AresLitho.Models.Layer;
-using AresLitho.Models.PCBDxf;
+using AresLitho.Models.ImportedFiles.PCBDxf;
 using AresLitho.Commons.ExtendObservableCollection;
-using AresLitho.Services;
+using AresLitho.Services.Dxf;
 
 namespace AresLitho.ViewModels
 {

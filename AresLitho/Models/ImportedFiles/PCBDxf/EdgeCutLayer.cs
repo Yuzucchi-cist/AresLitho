@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AresLitho.Models.PCBDxf
+namespace AresLitho.Models.ImportedFiles.PCBDxf
 {
     internal class EdgeCutLayer(string path) : DxfFile(path) { }
 }

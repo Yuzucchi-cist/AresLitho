@@ -1,9 +1,9 @@
-using AresLitho.Services;
+using AresLitho.Services.Dxf;
 using netDxf;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace AresLitho.Models.PCBDxf
+namespace AresLitho.Models.ImportedFiles.PCBDxf
 {
     abstract partial class DxfFile
     {

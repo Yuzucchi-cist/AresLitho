@@ -2,7 +2,7 @@ using AresLitho.Models;
 using netDxf;
 using netDxf.Entities;
 
-namespace AresLitho.Services
+namespace AresLitho.Services.Dxf
 {
     public static class DxfRasterizer
     {
