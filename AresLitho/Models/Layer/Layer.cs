@@ -1,4 +1,5 @@
 ﻿using AresLitho.Models.PCBDxf;
+using AresLitho.Models.GooFile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace AresLitho.Models.Layer
     {
         public string Name { get; set; }
         public BinImage BinImage { get; }
+        public PrinterProfile PrinterProfile { get; set; } = PrinterProfile.FromGoo(GooHeaderInfo.CreateDefaultGooHeaderInfo());
 
         public Layer(string name, BinImage binImage)
         {
