@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AresLitho"
         xmlns:properties="clr-namespace:AresLitho.Properties"
         xmlns:vm="clr-namespace:AresLitho.ViewModels.MainView"
+        xmlns:exTextBox="clr-namespace:AresLitho.Commons.ExtendTextBox"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="AresLitho" Height="450" Width="800" Icon="/favicon.ico">
@@ -58,13 +59,21 @@
 
                     <StackPanel Grid.Row="1">
                         <TextBlock Text="プリンタープロファイル"/>
-                        <ListBox ItemsSource="{Binding SelectedProperties}">
+                        <ListBox ItemsSource="{Binding PrinterProfile.Items}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name}" Width="75"/>
+                                        <TextBlock Text="{Binding Label}" Width="75"/>
                                         <Separator/>
-                                        <TextBox Text="{Binding Value}"/>
+                                        <exTextBox:FloatTextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="KeyDown">
+                                                    <i:InvokeCommandAction
+                                                        Command="{ Binding ApplyValueOnEnterCommand }"
+                                                        PassEventArgsToCommand="True"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </exTextBox:FloatTextBox>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

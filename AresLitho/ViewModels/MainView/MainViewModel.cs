@@ -33,12 +33,19 @@ namespace AresLitho.ViewModels.MainView
                 if(_SelectedLayer == value) return;
                 _SelectedLayer = value;
                 if(value != null)
+                {
                     Bitmap = EncodeToBitmap(value.BinImage);
+                    _printerProfile = new PrinterProfileViewModel(value.PrinterProfile);
+                }
                 else
+                {
                     Bitmap = null;
+                    _printerProfile = null;
+                }
 
                 OnPropertyChanged(nameof(SelectedLayer));
                 OnPropertyChanged(nameof(Bitmap));
+                OnPropertyChanged(nameof(PrinterProfile));
             }
         }
 
@@ -48,6 +55,17 @@ namespace AresLitho.ViewModels.MainView
             {
                 _Bitmap = value;
                 OnPropertyChanged(nameof(Bitmap));
+            }
+        }
+
+        private PrinterProfileViewModel? _printerProfile;
+        public PrinterProfileViewModel? PrinterProfile
+        {
+            get => _printerProfile;
+            set
+            {
+                _printerProfile = value;
+                OnPropertyChanged(nameof(PrinterProfile));
             }
         }
 
