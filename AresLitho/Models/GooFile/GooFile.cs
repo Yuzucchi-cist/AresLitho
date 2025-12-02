@@ -22,7 +22,7 @@ namespace AresLitho.Models.GooFile
         {
             Layers = [];
             Header = GooHeaderInfo.CreateDefaultGooHeaderInfo();
-            Header.BottomLayers = (short)Layers.Count;
+            Header.TransitionLayers = (short)Layers.Count;
         }
         public static GooFile CreateFromBinImageToCenter(BinImage layerImage)
         {
@@ -34,7 +34,7 @@ namespace AresLitho.Models.GooFile
 
             goo.Header.SmallPreviewImage = layerImage.Scale(GooHeaderInfo.SmallPreviewImageWidth, GooHeaderInfo.SmallPreviewImageHeight).EncodeToBinary();
             goo.Header.BigPreviewImage = layerImage.Scale(GooHeaderInfo.BigPreviewImageWidth, GooHeaderInfo.BigPreviewImageHeight).EncodeToBinary();
-            goo.Header.BottomLayers = 1;
+            goo.Header.TransitionLayers = 1;
 
             layerImage = new BinImage(goo.Header.XResolution, goo.Header.YResolution).SetToCenter(layerImage);
 
@@ -53,7 +53,7 @@ namespace AresLitho.Models.GooFile
 
             goo.Header.SmallPreviewImage = layerImage.Scale(GooHeaderInfo.SmallPreviewImageWidth, GooHeaderInfo.SmallPreviewImageHeight).EncodeToBinary();
             goo.Header.BigPreviewImage = layerImage.Scale(GooHeaderInfo.BigPreviewImageWidth, GooHeaderInfo.BigPreviewImageHeight).EncodeToBinary();
-            goo.Header.BottomLayers = 1;
+            goo.Header.TransitionLayers = 1;
 
             goo.Layers.Add(new GooLayerContent(layerImage.Scale(goo.Header.XResolution, goo.Header.YResolution)));
 

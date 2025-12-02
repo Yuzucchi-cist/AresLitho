@@ -161,8 +161,8 @@ namespace AresLitho.Models.GooFile
                 BeforeLiftTime = 0,
                 AfterLiftTime = 0,
                 AfterRetractTime = 0,
-                BottomExposureTime = 300,
-                BottomLayers = 1,
+                BottomExposureTime = 0,
+                BottomLayers = 0,
                 BottomLiftDistance = 0,
                 BottomLiftSpeed = 100,
                 LiftDistance = 0,
@@ -189,7 +189,7 @@ namespace AresLitho.Models.GooFile
                 PriceUnit = "$/L",
                 OffsetOfLayerContent = null,
                 GrayScaleLevel = true,
-                TransitionLayers = 0
+                TransitionLayers = 1
             };
         }
 
