@@ -15,7 +15,7 @@ using AresLitho.Models.GooFile;
 
 namespace AresLitho.ViewModels
 {
-    class MainViewModel : INotifyPropertyChanged
+    class MainViewModel : ViewModelBase
     {
         public ICommand DragOverCommand { get; private set; }
         public ICommand DropCommand { get; private set; }
@@ -51,20 +51,13 @@ namespace AresLitho.ViewModels
             }
         }
 
-        public MainViewModel()
+        public MainViewModel() : base()
         {
             DragOverCommand = new RelayCommand<DragEventArgs>(DropArea_DragOver);
             DropCommand = new RelayCommand<DragEventArgs>(DropArea_DragDrop);
             WriteGoo = new RelayCommand<object>(WriteGoo_Execute);
-            PropertyChanged = delegate { }; // Initialize the event to avoid null issues
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         private void DropArea_DragOver(DragEventArgs? e)
         {
             if (e == null) return;
