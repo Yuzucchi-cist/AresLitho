@@ -72,27 +72,8 @@ namespace AresLitho.Services
             int iy0 = (int)(y0 / pixelSizeMm);
             int ix1 = (int)(x1 / pixelSizeMm);
             int iy1 = (int)(y1 / pixelSizeMm);
-            int dx = Math.Abs(ix1 - ix0);
-            int dy = Math.Abs(iy1 - iy0);
-            int sx = ix0 < ix1 ? 1 : -1;
-            int sy = iy0 < iy1 ? 1 : -1;
-            int err = dx - dy;
-            while (true)
-            {
-                image.SetPixel(ix0, iy0, true);
-                if (ix0 == ix1 && iy0 == iy1) break;
-                int err2 = 2 * err;
-                if (err2 > -dy)
-                {
-                    err -= dy;
-                    ix0 += sx;
-                }
-                if (err2 < dx)
-                {
-                    err += dx;
-                    iy0 += sy;
-                }
-            }
+
+            image.DrawLine(ix0, iy0, ix1, iy1);
         }
 
         private static void DrawPolyline2D(BinImage image, Polyline2D polyline)

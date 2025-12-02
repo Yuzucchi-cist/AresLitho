@@ -94,6 +94,35 @@ namespace AresLitho.Models
             return imageData;
         }
 
+        public BinImage DrawLine(int x1, int y1, int x2, int y2)
+        {
+            int dx = Math.Abs(x2 - x1);
+            int dy = Math.Abs(y2 - y1);
+            int sx = x1 < x2 ? 1 : -1;
+            int sy = y1 < y2 ? 1 : -1;
+            int err = dx - dy;
+            while (true)
+            {
+                if (x1 >= 0 && x1 < Width && y1 >= 0 && y1 < Height)
+                {
+                    _binImage[y1, x1] = true;
+                }
+                if (x1 == x2 && y1 == y2) break;
+                int err2 = 2 * err;
+                if (err2 > -dy)
+                {
+                    err -= dy;
+                    x1 += sx;
+                }
+                if (err2 < dx)
+                {
+                    err += dx;
+                    y1 += sy;
+                }
+            }
+            return new BinImage(_binImage);
+        }
+
         public BinImage DrawCircle(int centerX, int centerY, int radius)
         {
             for (double angle = 0; angle < 2 * Math.PI; angle += 0.01)
