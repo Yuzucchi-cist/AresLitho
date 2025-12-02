@@ -27,7 +27,7 @@ namespace AresLitho.Models
             PrinterProfile profile = new(
                 gooHeaderInfo.XSize,
                 gooHeaderInfo.YSize,
-                gooHeaderInfo.BottomExposureTime
+                gooHeaderInfo.CommonExposureTime
             );
             return profile;
         }
@@ -36,8 +36,42 @@ namespace AresLitho.Models
         {
             goo.Header.XSize = XSize;
             goo.Header.YSize = YSize;
-            goo.Header.BottomExposureTime = ExposurePulse.ExposureTime;
+            goo.Header.CommonExposureTime = ExposurePulse.OnDuration;
+            goo.Header.BottomExposureTime = ExposurePulse.OnDuration;
+            goo.Header.AfterRetractTime = ExposurePulse.OffDuration;
+            goo.Header.BottomAfterRetractTime = ExposurePulse.OffDuration;
+            goo.Header.BottomLayers = 1;
+            goo.Header.TransitionLayers = (short)(ExposurePulse.ExposureCount - goo.Header.BottomLayers);
+
+            if (goo.Layers.Count < ExposurePulse.ExposureCount)
+            {
+                int layersToAdd = ExposurePulse.ExposureCount - goo.Layers.Count;
+                for (int i = 0; i < layersToAdd; i++)
+                {
+                    goo.Layers.Add(CreateNextLayer(goo.Layers.Last(), goo.Header));
+                }
+            }
+            else if (goo.Layers.Count > ExposurePulse.ExposureCount)
+            {
+                goo.Layers.RemoveRange(ExposurePulse.ExposureCount, goo.Layers.Count - ExposurePulse.ExposureCount);
+            }
+
+            goo.Layers.ForEach(layer =>
+            {
+                layer.LayerExposureTime = ExposurePulse.OnDuration;
+                layer.AfterRetractTime = ExposurePulse.OffDuration;
+            });
+
+
             return goo;
+        }
+
+        private GooLayerContent CreateNextLayer(GooLayerContent lastLayer, GooHeaderInfo header)
+        {
+            GooLayerContent newLayer = lastLayer.Clone();
+            newLayer.ApplyHeader(header);
+            newLayer.LayerPositionZ += header.LayerThickness;
+            return newLayer;
         }
     }
 

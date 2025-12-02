@@ -52,6 +52,24 @@ namespace AresLitho.Models.GooFile
             DataSize = this.ImageData.Length;
         }
 
+        public GooLayerContent ApplyHeader(GooHeaderInfo header)
+        {
+            LayerExposureTime = header.CommonExposureTime;
+            BeforeLiftTime = header.BeforeLiftTime;
+            AfterLiftTime = header.AfterLiftTime;
+            AfterRetractTime = header.AfterRetractTime;
+            LiftDistance = header.LiftDistance;
+            LiftSpeed = header.LiftSpeed;
+            SecondLiftDistance = header.SecondLiftDistance;
+            SecondLiftSpeed = header.SecondLiftSpeed;
+            RetractDistance = header.RetractDistance;
+            RetractSpeed = header.RetractSpeed;
+            SecondRetractDistance = header.SecondRetractDistance;
+            SecondRetractSpeed = header.SecondRetractSpeed;
+            LightPwm = header.LightPwm;
+            return this;
+        }
+
         private void SetDefaults()
         {
             PauseFlag = 0;
@@ -127,5 +145,8 @@ namespace AresLitho.Models.GooFile
             bw.Write(ImageData);
             bw.Write([ 0x0d, 0x0a ]); // CRLF delimiter
         }
+
+        public GooLayerContent Clone()
+            => (GooLayerContent)MemberwiseClone();
     }
 }
