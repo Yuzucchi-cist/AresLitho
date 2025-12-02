@@ -5,13 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace AresLitho.Models.ImportedFiles.PCBDxf
 {
-    abstract partial class DxfFile
+    abstract partial class DxfFile : ImportedFile
     {
-        private readonly string _path;
-        public string FileName { get { return System.IO.Path.GetFileName(_path); } }
-        public string Path { get { return _path; } }
         public DxfDocument DxfDocument { get; }
-        public BinImage BinImage { get; private set; }
         public byte[]? Bgr32Image
         {
             get => BinImage?.EncodeToBgr32();
@@ -27,24 +23,26 @@ namespace AresLitho.Models.ImportedFiles.PCBDxf
             }
         }
 
-        public DxfFile(string path)
+        public DxfFile(string path) : base(path, LoadAndRasterize(path, out DxfDocument dxfDocument))
         {
             // File format validation
             ValidateFileFormat(path);
-
-            DxfDocument = DxfService.Load(path);
-            BinImage = DxfRasterizer.LoadAndRasterize(DxfDocument).FillClosedAreas();
-
-            _path = path;
+            DxfDocument = dxfDocument;
         }
 
-        public static DxfFile Load(string path)
+        public static new DxfFile Load(string path)
         {
             DxfFile? dxfFile = LoadKicadFileFormat(path);
 
             return dxfFile is not null
                 ? dxfFile
                 : throw new ArgumentException("The file format is not supported.", path);
+        }
+
+        private static BinImage LoadAndRasterize(string path, out DxfDocument dxfDocument)
+        {
+            dxfDocument = DxfService.Load(path);
+            return DxfRasterizer.LoadAndRasterize(dxfDocument).FillClosedAreas();
         }
 
         private static DxfFile? LoadKicadFileFormat(string path)
