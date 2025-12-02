@@ -34,7 +34,20 @@ namespace AresLitho.Models.GooFile
         public byte[]? SmallPreviewImage { get; set; }  // 2*116*116 byte RGB565, 116x116
         public byte[]? BigPreviewImage { get; set; }    // 2*290*290 byte RGB565, 290x290
 
-        public  int? TotalLayers { get; set; }   // 4 byte
+        private int? _totalLayers;
+        public  int? TotalLayers
+        {
+            get
+            {
+                if (_totalLayers is null)
+                    return BottomLayers + TransitionLayers;
+                return _totalLayers;
+            }
+            private set
+            {
+                _totalLayers = value;
+            }
+        }   // 4 byte
 
         public  short XResolution { get; set; }  // 2 byte
         public  short YResolution { get; set; }  // 2 byte
@@ -131,7 +144,6 @@ namespace AresLitho.Models.GooFile
                 BlurLevel = 2,
                 SmallPreviewImage = new byte[2 * 116 * 116], // 空のプレビュー画像
                 BigPreviewImage = new byte[2 * 290 * 290],   // 空のプレビュー画像
-                TotalLayers = 1,
                 XResolution = 8520,
                 YResolution = 4320,
                 XMirror = true,
