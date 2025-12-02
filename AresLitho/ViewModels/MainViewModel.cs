@@ -8,9 +8,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using AresLitho.Models.Layer;
-using AresLitho.Models.ImportedFiles.PCBDxf;
 using AresLitho.Commons.ExtendObservableCollection;
 using AresLitho.Services.Dxf;
+using AresLitho.Models.ImportedFiles;
 
 namespace AresLitho.ViewModels
 {
@@ -80,13 +80,13 @@ namespace AresLitho.ViewModels
             if (e?.Data.GetData(DataFormats.FileDrop) is not string[] droppedFiles) return;
 
             Exception[] unimportedFileExceptions = [];
-            List<DxfFile> dxfFiles = [];
+            List<ImportedFile> importedFiles = [];
 
             foreach (var droppedFile in droppedFiles)
             {
                 try
                 {
-                    dxfFiles.Add(DxfFile.Load(droppedFile));
+                    importedFiles.Add(ImportedFile.Load(droppedFile));
                 }
                 catch (ArgumentException exception)
                 {
@@ -105,8 +105,8 @@ namespace AresLitho.ViewModels
                     MessageBoxImage.Error
                 );
             }
-            if (dxfFiles.Count == 0) return;
-            Layers.AddRange(Layer.Load(dxfFiles));
+            if (importedFiles.Count == 0) return;
+            Layers.AddRange(Layer.Load(importedFiles));
 
             Bitmap = EncodeToBitmap(Layers[0].BinImage);
 

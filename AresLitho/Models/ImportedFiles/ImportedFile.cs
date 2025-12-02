@@ -1,4 +1,5 @@
 ﻿using AresLitho.Models.ImportedFiles.PCBDxf;
+using AresLitho.Models.ImportedFiles.Stl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace AresLitho.Models.ImportedFiles
             {
                 case ".dxf":
                     return DxfFile.Load(path);
+                case ".stl":
+                    return StlFile.Load(path);
                 default:
                     throw new NotSupportedException($"File extension '{System.IO.Path.GetExtension(path)}' is not supported.");
             }

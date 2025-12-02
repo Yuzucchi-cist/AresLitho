@@ -1,4 +1,6 @@
-﻿using AresLitho.Models.ImportedFiles.PCBDxf;
+using AresLitho.Models.ImportedFiles;
+using AresLitho.Models.ImportedFiles.PCBDxf;
+using AresLitho.Models.ImportedFiles.Stl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,24 @@ namespace AresLitho.Models.Layer
         {
             Name = name;
             BinImage = binImage;
+        }
+
+        public static List<Layer> Load(List<ImportedFile> importedFiles)
+        {
+            if (importedFiles.All(file => file is DxfFile))
+            {
+                List<DxfFile> dxfFiles = importedFiles.Cast<DxfFile>().ToList();
+                return Load(dxfFiles);
+            }
+            else if (importedFiles.All(file => file is StlFile))
+            {
+                List<StlFile> stlFiles = importedFiles.Cast<StlFile>().ToList();
+                return Load(stlFiles);
+            }
+            else
+            {
+                throw new Exception("Unsupported file type.");
+            }
         }
 
         public static List<Layer> Load(List<DxfFile> dxfFiles)
@@ -67,6 +87,11 @@ namespace AresLitho.Models.Layer
             layers.Add(backMetalLayer);
             layers.Add(backFilmLayer);
             return layers;
+        }
+
+        private static List<Layer> Load(List<StlFile> stlFiles)
+        {
+            return stlFiles.Select(stlFile => new SingleLayer(stlFile)).ToList<Layer>();
         }
 
         private static void ValidateFileName(List<DxfFile> dxfFiles)
