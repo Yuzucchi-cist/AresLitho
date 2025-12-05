@@ -1,3 +1,4 @@
+using AresLitho.Models.GooFile;
 using AresLitho.Models.ImportedFiles;
 using AresLitho.Models.ImportedFiles.PCBDxf;
 using AresLitho.Models.ImportedFiles.Stl;
@@ -13,6 +14,7 @@ namespace AresLitho.Models.Layer
     {
         public string Name { get; set; }
         public BinImage BinImage { get; }
+        public PrinterProfile PrinterProfile { get; set; } = PrinterProfile.FromGoo(GooHeaderInfo.CreateDefaultGooHeaderInfo());
 
         public Layer(string name, BinImage binImage)
         {

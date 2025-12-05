@@ -11,10 +11,11 @@ using AresLitho.Models.Layer;
 using AresLitho.Commons.ExtendObservableCollection;
 using AresLitho.Services.Dxf;
 using AresLitho.Models.ImportedFiles;
+using AresLitho.Models.GooFile;
 
-namespace AresLitho.ViewModels
+namespace AresLitho.ViewModels.MainView
 {
-    class MainViewModel : INotifyPropertyChanged
+    class MainViewModel : ViewModelBase
     {
         public ICommand DragOverCommand { get; private set; }
         public ICommand DropCommand { get; private set; }
@@ -32,12 +33,19 @@ namespace AresLitho.ViewModels
                 if(_SelectedLayer == value) return;
                 _SelectedLayer = value;
                 if(value != null)
+                {
                     Bitmap = EncodeToBitmap(value.BinImage);
+                    _printerProfile = new PrinterProfileViewModel(value.PrinterProfile);
+                }
                 else
+                {
                     Bitmap = null;
+                    _printerProfile = null;
+                }
 
                 OnPropertyChanged(nameof(SelectedLayer));
                 OnPropertyChanged(nameof(Bitmap));
+                OnPropertyChanged(nameof(PrinterProfile));
             }
         }
 
@@ -50,20 +58,24 @@ namespace AresLitho.ViewModels
             }
         }
 
-        public MainViewModel()
+        private PrinterProfileViewModel? _printerProfile;
+        public PrinterProfileViewModel? PrinterProfile
+        {
+            get => _printerProfile;
+            set
+            {
+                _printerProfile = value;
+                OnPropertyChanged(nameof(PrinterProfile));
+            }
+        }
+
+        public MainViewModel() : base()
         {
             DragOverCommand = new RelayCommand<DragEventArgs>(DropArea_DragOver);
             DropCommand = new RelayCommand<DragEventArgs>(DropArea_DragDrop);
             WriteGoo = new RelayCommand<object>(WriteGoo_Execute);
-            PropertyChanged = delegate { }; // Initialize the event to avoid null issues
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         private void DropArea_DragOver(DragEventArgs? e)
         {
             if (e == null) return;
@@ -135,6 +147,7 @@ namespace AresLitho.ViewModels
                 BinImage binImage = SelectedLayer.BinImage;
 
                 GooFile goo = GooFile.CreateFromBinImageToCenter(binImage);
+                goo = SelectedLayer.PrinterProfile.ApplyPrinterProfileToGoo(goo);
                 goo.WriteToFile(filename);
                 MessageBox.Show($"{filename}は正常に書き込まれました。");
             }
