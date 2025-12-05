@@ -1,4 +1,4 @@
-﻿using AresLitho.Services;
+﻿using AresLitho.Services.Dxf;
 using netDxf;
 using netDxf.Entities;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AresLitho.Models.PCBDxf
+namespace AresLitho.Models.ImportedFiles.PCBDxf
 {
     internal class CuLayer : DxfFile
     {

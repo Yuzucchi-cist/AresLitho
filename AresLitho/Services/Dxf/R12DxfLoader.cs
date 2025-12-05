@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AresLitho.Services
+namespace AresLitho.Services.Dxf
 {
     internal static class R12DxfLoader
     {
