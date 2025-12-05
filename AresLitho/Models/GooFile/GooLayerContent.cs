@@ -73,20 +73,20 @@ namespace AresLitho.Models.GooFile
         private void SetDefaults()
         {
             PauseFlag = 0;
-            PausePositionZ = 0.01f;
-            LayerPositionZ = 0.01f;
+            PausePositionZ = 0.001f;
+            LayerPositionZ = 0.001f;
             LayerExposureTime = 300;
             LayerOffTime = 0;
-            BeforeLiftTime = 0.2f;
+            BeforeLiftTime = 0;
             AfterLiftTime = 0;
-            AfterRetractTime = 0.5f;
-            LiftDistance = 2;
+            AfterRetractTime = 0.001f;
+            LiftDistance = 0.001f;
             LiftSpeed = 75;
-            SecondLiftDistance = 3;
+            SecondLiftDistance = 0;
             SecondLiftSpeed = 230;
-            RetractDistance = 3;
+            RetractDistance = 0;
             RetractSpeed = 230;
-            SecondRetractDistance = 2;
+            SecondRetractDistance = 0.001f;
             SecondRetractSpeed = 75;
             LightPwm = 255;
             DataSize = 0;

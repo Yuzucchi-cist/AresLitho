@@ -129,6 +129,7 @@ namespace AresLitho.Models.GooFile
 
         public static GooHeaderInfo CreateDefaultGooHeaderInfo()
         {
+            float defaultLiftDistance = 0.001f;
             return new GooHeaderInfo
             {
                 Version = "V3.0",
@@ -151,9 +152,9 @@ namespace AresLitho.Models.GooFile
                 XSize = 153.36f,
                 YSize = 77.76f,
                 ZSize = 0.01f,
-                LayerThickness = 0.01f,
+                LayerThickness = 0.001f,
                 CommonExposureTime = 300,
-                ExposureDelayMode = false,
+                ExposureDelayMode = true,
                 TurnOffTime = 0,
                 BottomBeforeLiftTime = 0,
                 BottomAfterLiftTime = 0,
@@ -163,10 +164,10 @@ namespace AresLitho.Models.GooFile
                 AfterRetractTime = 0,
                 BottomExposureTime = 0,
                 BottomLayers = 0,
-                BottomLiftDistance = 0,
-                BottomLiftSpeed = 100,
-                LiftDistance = 0,
-                LiftSpeed = 100,
+                BottomLiftDistance = defaultLiftDistance,
+                BottomLiftSpeed = 75,
+                LiftDistance = defaultLiftDistance,
+                LiftSpeed = 75,
                 BottomRetractDistance = 0,
                 BottomRetractSpeed = 230,
                 RetractDistance = 0,
@@ -175,9 +176,9 @@ namespace AresLitho.Models.GooFile
                 BottomSecondLiftSpeed = 230,
                 SecondLiftDistance = 0,
                 SecondLiftSpeed = 230,
-                BottomSecondRetractDistance = 0,
+                BottomSecondRetractDistance = defaultLiftDistance,
                 BottomSecondRetractSpeed = 75,
-                SecondRetractDistance = 0,
+                SecondRetractDistance = defaultLiftDistance,
                 SecondRetractSpeed = 75,
                 BottomLightPwm = 255,
                 LightPwm = 255,
