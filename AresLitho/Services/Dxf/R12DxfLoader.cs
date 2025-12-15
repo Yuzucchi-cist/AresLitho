@@ -47,7 +47,7 @@ namespace AresLitho.Services.Dxf
                     }
                     else if (inEntitiesSection)
                     {
-                        if ( entityData.Count > 0 && !string.IsNullOrEmpty(currentEntityType))
+                        if (entityData.Count > 0 && !string.IsNullOrEmpty(currentEntityType))
                         {
                             var entity = ParseEntity(currentEntityType, entityData);
                             if (entity != null)
@@ -84,7 +84,8 @@ namespace AresLitho.Services.Dxf
         }
 
         private static EntityObject? ParseEntity(string type, Dictionary<int, string> data)
-        {             switch (type)
+        {
+            switch (type)
             {
                 case "LINE":
                     return new Line(

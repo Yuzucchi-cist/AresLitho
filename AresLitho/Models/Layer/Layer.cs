@@ -100,7 +100,7 @@ namespace AresLitho.Models.Layer
             foreach (var file in dxfFiles)
             {
                 switch (file)
-                                    {
+                {
                     case CuLayer:
                         cuCount++;
                         break;

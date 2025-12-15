@@ -55,7 +55,7 @@ namespace AresLitho.Behaviors
         private void OnLoad(object sender, RoutedEventArgs e)
         {
             if (Target == null) return;
-            scaleTransform = new ScaleTransform(1,1);
+            scaleTransform = new ScaleTransform(1, 1);
             translateTransform = new TranslateTransform(0, 0);
 
             var transformGroup = new TransformGroup()

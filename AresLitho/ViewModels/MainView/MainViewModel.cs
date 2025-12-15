@@ -27,9 +27,9 @@ namespace AresLitho.ViewModels.MainView
             get { return _SelectedLayer; }
             set
             {
-                if(_SelectedLayer == value) return;
+                if (_SelectedLayer == value) return;
                 _SelectedLayer = value;
-                if(value != null)
+                if (value != null)
                 {
                     Bitmap = EncodeToBitmap(value.BinImage);
                     _printerProfile = new PrinterProfileViewModel(value.PrinterProfile);
@@ -47,7 +47,9 @@ namespace AresLitho.ViewModels.MainView
         }
 
         private BitmapSource? _Bitmap;
-        public  BitmapSource? Bitmap { get { return _Bitmap; }
+        public BitmapSource? Bitmap
+        {
+            get { return _Bitmap; }
             private set
             {
                 _Bitmap = value;

@@ -14,24 +14,24 @@ namespace AresLitho.Models.GooFile
         public readonly static int BigPreviewImageWidth = 290;
         public readonly static int BigPreviewImageHeight = 290;
 
-        public  string Version { get; set; }         // 4 byte
-        public  byte[] MagicTag { get; set; }        // 8 byte
-        public  string SoftwareInfo { get; set; }    // 32 byte
-        public  string SoftwareVersion { get; set; } // 24 byte
-        public  string FileTime { get; set; }        // 24 byte
-        public  string PrinterName { get; set; }     // 32 byte
-        public  string PrinterType { get; set; }     // 32 byte
-        public  string ProfileName { get; set; }     // 32 byte
+        public string Version { get; set; }         // 4 byte
+        public byte[] MagicTag { get; set; }        // 8 byte
+        public string SoftwareInfo { get; set; }    // 32 byte
+        public string SoftwareVersion { get; set; } // 24 byte
+        public string FileTime { get; set; }        // 24 byte
+        public string PrinterName { get; set; }     // 32 byte
+        public string PrinterType { get; set; }     // 32 byte
+        public string ProfileName { get; set; }     // 32 byte
 
-        public  short AntiAliasingLevel { get; set; }    // 2 byte
-        public  short GreyLevel { get; set; }            // 2 byte
-        public  short BlurLevel { get; set; }            // 2 byte
+        public short AntiAliasingLevel { get; set; }    // 2 byte
+        public short GreyLevel { get; set; }            // 2 byte
+        public short BlurLevel { get; set; }            // 2 byte
 
         public byte[]? SmallPreviewImage { get; set; }  // 2*116*116 byte RGB565, 116x116
         public byte[]? BigPreviewImage { get; set; }    // 2*290*290 byte RGB565, 290x290
 
         private int? _totalLayers;
-        public  int? TotalLayers
+        public int? TotalLayers
         {
             get
             {
@@ -45,71 +45,71 @@ namespace AresLitho.Models.GooFile
             }
         }   // 4 byte
 
-        public  short XResolution { get; set; }  // 2 byte
-        public  short YResolution { get; set; }  // 2 byte
+        public short XResolution { get; set; }  // 2 byte
+        public short YResolution { get; set; }  // 2 byte
 
-        public  bool XMirror { get; set; }   // 1 byte
-        public  bool YMirror { get; set; }   // 1 byte
+        public bool XMirror { get; set; }   // 1 byte
+        public bool YMirror { get; set; }   // 1 byte
 
-        public  float XSize { get; set; }            // 4 byte
-        public  float YSize { get; set; }            // 4 byte
-        public  float ZSize { get; set; }            // 4 byte
-        public  float LayerThickness { get; set; }   // 4 byte
+        public float XSize { get; set; }            // 4 byte
+        public float YSize { get; set; }            // 4 byte
+        public float ZSize { get; set; }            // 4 byte
+        public float LayerThickness { get; set; }   // 4 byte
 
-        public  float CommonExposureTime { get; set; }   // 1 byte
-        public  bool ExposureDelayMode { get; set; }     // 4 byte
+        public float CommonExposureTime { get; set; }   // 1 byte
+        public bool ExposureDelayMode { get; set; }     // 4 byte
 
-        public  float TurnOffTime { get; set; }          // 4 byte
+        public float TurnOffTime { get; set; }          // 4 byte
 
-        public  float BottomBeforeLiftTime { get; set; }     // 4 byte
-        public  float BottomAfterLiftTime { get; set; }      // 4 byte
-        public  float BottomAfterRetractTime { get; set; }   // 4 byte
+        public float BottomBeforeLiftTime { get; set; }     // 4 byte
+        public float BottomAfterLiftTime { get; set; }      // 4 byte
+        public float BottomAfterRetractTime { get; set; }   // 4 byte
 
-        public  float BeforeLiftTime { get; set; }   // 4 byte
-        public  float AfterLiftTime { get; set; }    // 4 byte
-        public  float AfterRetractTime { get; set; } // 4 byte
+        public float BeforeLiftTime { get; set; }   // 4 byte
+        public float AfterLiftTime { get; set; }    // 4 byte
+        public float AfterRetractTime { get; set; } // 4 byte
 
-        public  float BottomExposureTime { get; set; }   // 4 byte
-        public  int BottomLayers { get; set; }           // 4 byte
+        public float BottomExposureTime { get; set; }   // 4 byte
+        public int BottomLayers { get; set; }           // 4 byte
 
-        public  float BottomLiftDistance { get; set; }   // 4 byte
-        public  float BottomLiftSpeed { get; set; }      // 4 byte
+        public float BottomLiftDistance { get; set; }   // 4 byte
+        public float BottomLiftSpeed { get; set; }      // 4 byte
 
-        public  float LiftDistance { get; set; }         // 4 byte
-        public  float LiftSpeed { get; set; }            // 4 byte
+        public float LiftDistance { get; set; }         // 4 byte
+        public float LiftSpeed { get; set; }            // 4 byte
 
-        public  float BottomRetractDistance { get; set; }    // 4 byte
-        public  float BottomRetractSpeed { get; set; }       // 4 byte
+        public float BottomRetractDistance { get; set; }    // 4 byte
+        public float BottomRetractSpeed { get; set; }       // 4 byte
 
-        public  float RetractDistance { get; set; }  // 4 byte
-        public  float RetractSpeed { get; set; }     // 4 byte
+        public float RetractDistance { get; set; }  // 4 byte
+        public float RetractSpeed { get; set; }     // 4 byte
 
-        public  float BottomSecondLiftDistance { get; set; } // 4 byte
-        public  float BottomSecondLiftSpeed { get; set; }    // 4 byte
+        public float BottomSecondLiftDistance { get; set; } // 4 byte
+        public float BottomSecondLiftSpeed { get; set; }    // 4 byte
 
-        public  float SecondLiftDistance { get; set; }       // 4 byte
-        public  float SecondLiftSpeed { get; set; }          // 4 byte
+        public float SecondLiftDistance { get; set; }       // 4 byte
+        public float SecondLiftSpeed { get; set; }          // 4 byte
 
-        public  float BottomSecondRetractDistance { get; set; }  // 4 byte
-        public  float BottomSecondRetractSpeed { get; set; }     // 4 byte
+        public float BottomSecondRetractDistance { get; set; }  // 4 byte
+        public float BottomSecondRetractSpeed { get; set; }     // 4 byte
 
-        public  float SecondRetractDistance { get; set; }    // 4 byte
-        public  float SecondRetractSpeed { get; set; }       // 4 byte
+        public float SecondRetractDistance { get; set; }    // 4 byte
+        public float SecondRetractSpeed { get; set; }       // 4 byte
 
-        public  short BottomLightPwm { get; set; }   // 2 byte
-        public  short LightPwm { get; set; }         // 2 byte
+        public short BottomLightPwm { get; set; }   // 2 byte
+        public short LightPwm { get; set; }         // 2 byte
 
-        public  bool AdvanceMode { get; set; }   // 1 byte
+        public bool AdvanceMode { get; set; }   // 1 byte
 
-        public  int PrintingTime { get; set; }   // 4 byte
-        public  float TotalVolume { get; set; }  // 4 byte
-        public  float TotalWeight { get; set; }  // 4 byte
-        public  float TotalPrice { get; set; }   // 4 byte
-        public  string PriceUnit { get; set; }   // 4 byte
+        public int PrintingTime { get; set; }   // 4 byte
+        public float TotalVolume { get; set; }  // 4 byte
+        public float TotalWeight { get; set; }  // 4 byte
+        public float TotalPrice { get; set; }   // 4 byte
+        public string PriceUnit { get; set; }   // 4 byte
 
-        public  int? OffsetOfLayerContent { get; set; }   // 4 byte
-        public  bool GrayScaleLevel { get; set; }        // 1 byte
-        public  short TransitionLayers { get; set; }     // 2 byte
+        public int? OffsetOfLayerContent { get; set; }   // 4 byte
+        public bool GrayScaleLevel { get; set; }        // 1 byte
+        public short TransitionLayers { get; set; }     // 2 byte
         public GooHeaderInfo()
         {
             Version = string.Empty;
