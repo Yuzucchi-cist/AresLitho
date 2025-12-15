@@ -1,17 +1,14 @@
-using System.ComponentModel;
 using AresLitho.Commons;
+using AresLitho.Commons.ExtendObservableCollection;
 using AresLitho.Models;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+using AresLitho.Models.GooFile;
+using AresLitho.Models.ImportedFiles;
+using AresLitho.Models.Layer;
+using AresLitho.Services.Dxf;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using AresLitho.Models.Layer;
-using AresLitho.Commons.ExtendObservableCollection;
-using AresLitho.Services.Dxf;
-using AresLitho.Models.ImportedFiles;
-using AresLitho.Models.GooFile;
 
 namespace AresLitho.ViewModels.MainView
 {

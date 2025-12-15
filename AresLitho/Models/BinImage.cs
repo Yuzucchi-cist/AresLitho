@@ -1,4 +1,3 @@
-using netDxf;
 using OpenCvSharp;
 using System.Runtime.InteropServices;
 

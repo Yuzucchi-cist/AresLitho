@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using AresLitho.Commons;
+using System.IO;
 using System.Text;
-using AresLitho.Commons;
 
 namespace AresLitho.Models.GooFile
 {
