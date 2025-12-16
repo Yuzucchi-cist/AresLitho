@@ -58,7 +58,7 @@ namespace AresLitho.Models
             int copyWidth = Math.Min(Width, newWidth);
             int copyHeight = Math.Min(Height, newHeight);
 
-            for (int y = 0; y < Height; y++)
+            for (int y = 0; y < copyHeight; y++)
                 Array.Copy(_binImage, y * Width, newImage, y * newWidth, copyWidth);
 
             return new BinImage(newImage);
