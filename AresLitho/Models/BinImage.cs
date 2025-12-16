@@ -1,4 +1,3 @@
-using netDxf;
 using OpenCvSharp;
 using System.Runtime.InteropServices;
 
@@ -9,7 +8,9 @@ namespace AresLitho.Models
         private bool[,] _binImage;
         public int Width { get => _binImage.GetLength(1); }
         public int Height { get => _binImage.GetLength(0); }
-        public byte[,] Byte { get
+        public byte[,] Byte
+        {
+            get
             {
                 byte[,] bytes = new byte[Height, Width];
                 for (int y = 0; y < Height; y++)
@@ -155,9 +156,9 @@ namespace AresLitho.Models
             int r2 = radius * radius;
 
             int yStart = Math.Max(0, centerY - radius);
-            int yEnd   = Math.Min(Height - 1, centerY + radius);
+            int yEnd = Math.Min(Height - 1, centerY + radius);
             int xStart = Math.Max(0, centerX - radius);
-            int xEnd   = Math.Min(Width - 1, centerX + radius);
+            int xEnd = Math.Min(Width - 1, centerX + radius);
 
             for (int y = yStart; y <= yEnd; y++)
             {

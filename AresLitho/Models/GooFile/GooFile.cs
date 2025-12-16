@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using AresLitho.Commons;
+using System.IO;
 using System.Text;
-using AresLitho.Commons;
 
 namespace AresLitho.Models.GooFile
 {
@@ -91,7 +91,7 @@ namespace AresLitho.Models.GooFile
             {
                 layer.WriteToStream(outputStream);
             }
-            
+
             using BigEndianBinaryWriter bw = new(outputStream, Encoding.ASCII, true);
             bw.Write([0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x44, 0x4C, 0x50, 0x00]);   // Write Ending string
         }

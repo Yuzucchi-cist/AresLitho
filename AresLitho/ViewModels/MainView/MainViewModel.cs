@@ -1,17 +1,14 @@
-using System.ComponentModel;
 using AresLitho.Commons;
+using AresLitho.Commons.ExtendObservableCollection;
 using AresLitho.Models;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+using AresLitho.Models.GooFile;
+using AresLitho.Models.ImportedFiles;
+using AresLitho.Models.Layer;
+using AresLitho.Services.Dxf;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using AresLitho.Models.Layer;
-using AresLitho.Commons.ExtendObservableCollection;
-using AresLitho.Services.Dxf;
-using AresLitho.Models.ImportedFiles;
-using AresLitho.Models.GooFile;
 
 namespace AresLitho.ViewModels.MainView
 {
@@ -30,9 +27,9 @@ namespace AresLitho.ViewModels.MainView
             get { return _SelectedLayer; }
             set
             {
-                if(_SelectedLayer == value) return;
+                if (_SelectedLayer == value) return;
                 _SelectedLayer = value;
-                if(value != null)
+                if (value != null)
                 {
                     Bitmap = EncodeToBitmap(value.BinImage);
                     _printerProfile = new PrinterProfileViewModel(value.PrinterProfile);
@@ -50,7 +47,9 @@ namespace AresLitho.ViewModels.MainView
         }
 
         private BitmapSource? _Bitmap;
-        public  BitmapSource? Bitmap { get { return _Bitmap; }
+        public BitmapSource? Bitmap
+        {
+            get { return _Bitmap; }
             private set
             {
                 _Bitmap = value;
