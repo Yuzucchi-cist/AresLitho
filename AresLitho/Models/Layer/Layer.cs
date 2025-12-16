@@ -2,11 +2,6 @@ using AresLitho.Models.GooFile;
 using AresLitho.Models.ImportedFiles;
 using AresLitho.Models.ImportedFiles.PCBDxf;
 using AresLitho.Models.ImportedFiles.Stl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AresLitho.Models.Layer
 {
@@ -105,7 +100,7 @@ namespace AresLitho.Models.Layer
             foreach (var file in dxfFiles)
             {
                 switch (file)
-                                    {
+                {
                     case CuLayer:
                         cuCount++;
                         break;

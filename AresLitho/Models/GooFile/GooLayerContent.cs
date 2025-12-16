@@ -1,10 +1,6 @@
 ﻿using AresLitho.Commons;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AresLitho.Models.GooFile
 {
@@ -140,10 +136,10 @@ namespace AresLitho.Models.GooFile
             bw.Write(SecondRetractDistance);
             bw.Write(SecondRetractSpeed);
             bw.Write(LightPwm);
-            bw.Write([ 0x0d, 0x0a ]); // CRLF delimiter
+            bw.Write([0x0d, 0x0a]); // CRLF delimiter
             bw.Write(DataSize);
             bw.Write(ImageData);
-            bw.Write([ 0x0d, 0x0a ]); // CRLF delimiter
+            bw.Write([0x0d, 0x0a]); // CRLF delimiter
         }
 
         public GooLayerContent Clone()
