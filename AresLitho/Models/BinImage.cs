@@ -1,4 +1,5 @@
 using OpenCvSharp;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace AresLitho.Models
@@ -6,6 +7,7 @@ namespace AresLitho.Models
     public class BinImage
     {
         private bool[,] _binImage;
+        public bool this[int x, int y] { get => GetPixel(x, y); }
         public int Width { get => _binImage.GetLength(1); }
         public int Height { get => _binImage.GetLength(0); }
         public byte[,] Byte
@@ -38,6 +40,8 @@ namespace AresLitho.Models
                     _binImage[y, x] = bytes[i] != 0;
                 }
         }
+
+        public bool GetPixel(int x, int y) => _binImage[y, x];
 
         public void SetPixel(int x, int y, bool value) =>
             _binImage[y, x] = value;
