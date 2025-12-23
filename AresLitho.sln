@@ -5,6 +5,8 @@ VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AresLitho", "AresLitho\AresLitho.csproj", "{0E8397AC-EBFC-4540-A642-A8FA87B48B72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AresLithoTest", "AresLithoTest\AresLithoTest.csproj", "{54E8B178-CDF7-4E8F-B6FA-D1D4601D072F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
