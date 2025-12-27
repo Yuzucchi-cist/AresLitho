@@ -236,6 +236,8 @@ namespace AresLitho.Models
 
         public BinImage FillClosedAreas()
         {
+            if (Width == 0 || Height == 0)
+                return new BinImage(_binImage);
             // Convert to OpenCV Mat
             Mat mat = ConvertToMat(_binImage);
 
