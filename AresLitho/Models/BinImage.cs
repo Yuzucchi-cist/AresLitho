@@ -153,7 +153,14 @@ namespace AresLitho.Models
             // Convert back to BinImage
             byte[] outputBytes = new byte[mat.Height * mat.Width * mat.ElemSize()];
             Marshal.Copy(mat.Data, outputBytes, 0, outputBytes.Length);
-            return new BinImage(outputBytes, Width, Height);
+            _binImage = new bool[Height, Width];
+            for (int y = 0; y < Height; y++)
+                for (int x = 0; x < Width; x++)
+                {
+                    int i = y * Width + x;
+                    _binImage[y, x] = outputBytes[i] != 0;
+                }
+            return new BinImage(_binImage);
         }
 
         public BinImage DrawFilledCircle(int centerX, int centerY, int radius, bool fillValue)
