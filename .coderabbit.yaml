@@ -22,11 +22,18 @@ reviews:
       "
 
   path_filters:
-    - "**/*.Designer.cs"
-    - "**/bin/**"
-    - "**/obj/**"
+    - "**/*.cs"
+    - "!**/*.Designer.cs"
+    - "!**/bin/**"
+    - "!**/obj/**"
 
   # 個人開発向けにノイズを抑える
   auto_review:
     enabled: true
     drafts: false
+    base_branches:
+      - "main"
+      - "develop"
+      - "feature.*"
+      - "test.*"
+      - "refact.*"
