@@ -1,19 +1,27 @@
 language: ja
 
 reviews:
-  # レビューのトーン
-  tone: polite
-  high_level_summary: true
-  review_status: true
+  path_instructions:
+    - path: "**/*.cs"
+      instructions: "
+# アルゴリズム系
+- ループ条件や境界判定に off-by-one の可能性はないか
+- 可読性を下げる最適化が行われていないか
 
-  # コメントの粒度
-  comment_level: detailed
+# C# 向け
+- null / 範囲外アクセスの可能性がないか
+- public API の振る舞いがテストで保証されているか
+      "
+    - path: "AresLithoTest/**/*.cs"
+      instructions: "
+# テストに関する観点を強調
+- テストは Arrange / Act / Assert の構造が明確か
+- テスト名から仕様が読み取れるか
+- 境界条件や異常系が考慮されているか
+- 実装詳細に依存しすぎていないか
+      "
 
-  # テストコードもレビュー対象にする
-  include_tests: true
-
-  # 重要度の低い指摘を減らす
-  ignore:
+  path_filters:
     - "**/*.Designer.cs"
     - "**/bin/**"
     - "**/obj/**"
@@ -22,18 +30,3 @@ reviews:
   auto_review:
     enabled: true
     drafts: false
-
-guidelines:
-  # テストに関する観点を強調
-  - テストは Arrange / Act / Assert の構造が明確か
-  - テスト名から仕様が読み取れるか
-  - 境界条件や異常系が考慮されているか
-  - 実装詳細に依存しすぎていないか
-
-  # アルゴリズム系
-  - ループ条件や境界判定に off-by-one の可能性はないか
-  - 可読性を下げる最適化が行われていないか
-
-  # C# 向け
-  - null / 範囲外アクセスの可能性がないか
-  - public API の振る舞いがテストで保証されているか
