@@ -21,6 +21,7 @@ namespace AresLitho.Models
                 return bytes;
             }
         }
+
         public BinImage(int width, int height)
         {
             _binImage = new bool[height, width];
@@ -143,15 +144,22 @@ namespace AresLitho.Models
 
         public BinImage DrawCircle(int centerX, int centerY, int radius)
         {
-            for (double angle = 0; angle < 2 * Math.PI; angle += 0.01)
-            {
-                int x = (int)(centerX + radius * Math.Cos(angle));
-                int y = (int)(centerY + radius * Math.Sin(angle));
-                if (x >= 0 && x < Width && y >= 0 && y < Height)
+            // Convert to OpenCV Mat
+            Mat mat = ConvertToMat(_binImage);
+
+            // Draw circle
+            Cv2.Circle(mat, new Point(centerX, centerY), radius, Scalar.White, 1);
+
+            // Convert back to BinImage
+            byte[] outputBytes = new byte[mat.Height * mat.Width * mat.ElemSize()];
+            Marshal.Copy(mat.Data, outputBytes, 0, outputBytes.Length);
+            _binImage = new bool[Height, Width];
+            for (int y = 0; y < Height; y++)
+                for (int x = 0; x < Width; x++)
                 {
-                    _binImage[y, x] = true;
+                    int i = y * Width + x;
+                    _binImage[y, x] = outputBytes[i] != 0;
                 }
-            }
             return new BinImage(_binImage);
         }
 
@@ -229,10 +237,7 @@ namespace AresLitho.Models
         public BinImage FillClosedAreas()
         {
             // Convert to OpenCV Mat
-            Mat mat = new(Height, Width, MatType.CV_8UC1);
-            for (int y = 0; y < Height; y++)
-                for (int x = 0; x < Width; x++)
-                    mat.Set(y, x, _binImage[y, x] ? 255 : 0);
+            Mat mat = ConvertToMat(_binImage);
 
             // Find contours
             Cv2.FindContours(mat, out Point[][] contours, out HierarchyIndex[] hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
@@ -245,6 +250,15 @@ namespace AresLitho.Models
             byte[] outputBytes = new byte[mat.Height * mat.Width * mat.ElemSize()];
             Marshal.Copy(mat.Data, outputBytes, 0, outputBytes.Length);
             return new BinImage(outputBytes, Width, Height);
+        }
+
+        private Mat ConvertToMat(bool[,] img)
+        {
+            Mat mat = new(Height, Width, MatType.CV_8UC1);
+            for (int y = 0; y < Height; y++)
+                for (int x = 0; x < Width; x++)
+                    mat.Set(y, x, img[y, x] ? 255 : 0);
+            return mat;
         }
     }
 }
