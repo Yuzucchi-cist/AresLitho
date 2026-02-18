@@ -1,3 +1,4 @@
+using AresLitho.Models.ImportedFiles.GenericDxf;
 using AresLitho.Services.Dxf;
 using netDxf;
 using System.IO;
@@ -24,9 +25,7 @@ namespace AresLitho.Models.ImportedFiles.PCBDxf
         {
             DxfFile? dxfFile = LoadKicadFileFormat(path);
 
-            return dxfFile is not null
-                ? dxfFile
-                : throw new ArgumentException("The file format is not supported.", path);
+            return dxfFile ?? new GenericDxfFile(path);
         }
 
         private static BinImage LoadAndRasterize(string path, out DxfDocument dxfDocument)

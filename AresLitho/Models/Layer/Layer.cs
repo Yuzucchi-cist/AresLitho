@@ -1,5 +1,6 @@
 using AresLitho.Models.GooFile;
 using AresLitho.Models.ImportedFiles;
+using AresLitho.Models.ImportedFiles.GenericDxf;
 using AresLitho.Models.ImportedFiles.PCBDxf;
 using AresLitho.Models.ImportedFiles.Stl;
 
@@ -49,6 +50,8 @@ namespace AresLitho.Models.Layer
                         return new List<Layer> { new SingleLayer(pasteLayer) };
                     case EdgeCutLayer edgeCutLayer:
                         return new List<Layer> { new SingleLayer(edgeCutLayer) };
+                    case GenericDxfFile genericDxfFile:
+                        return new List<Layer> { new GenericLayer(genericDxfFile) };
                     default:
                         throw new Exception("Unknown layer type.");
                 }
